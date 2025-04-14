@@ -119,3 +119,9 @@ if (LLAMA_METAL AND NOT LLAMA_METAL_EMBED_LIBRARY)
     # copy ggml-common.h and ggml-metal.metal to bin directory
     configure_file(${llama.cpp_SOURCE_DIR}/ggml-metal.metal ${JLLAMA_DIR}/ggml-metal.metal COPYONLY)
 endif()
+
+if (MSVC)
+    add_definitions(-DPLATFORM_WINDOWS)
+else()
+    add_definitions(-DPLATFORM_UNIX)
+endif()

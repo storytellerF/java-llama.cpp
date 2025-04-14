@@ -32,7 +32,11 @@
 
 // 'long' is always 32 bit on windows so this matches what jdk expects
 typedef long jint;
+#ifdef PLATFORM_WINDOWS
 typedef __int64 jlong;
+#else
+typedef int64_t jlong;
+#endif
 typedef signed char jbyte;
 
 #endif /* !_JAVASOFT_JNI_MD_H_ */
