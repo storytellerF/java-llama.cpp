@@ -26,16 +26,25 @@
 #ifndef _JAVASOFT_JNI_MD_H_
 #define _JAVASOFT_JNI_MD_H_
 
-#define JNIEXPORT __declspec(dllexport)
-#define JNIIMPORT __declspec(dllimport)
-#define JNICALL __stdcall
+#ifdef _MSC_VER
+  // Windows + MSVC 编译器
+  #define JNIEXPORT __declspec(dllexport)
+  #define JNIIMPORT __declspec(dllimport)
+  #define JNICALL __stdcall
+#else
+  // 其他平台或非 MSVC 编译器
+  #define JNIEXPORT
+  #define JNIIMPORT
+  #define JNICALL
+#endif
 
 // 'long' is always 32 bit on windows so this matches what jdk expects
 typedef long jint;
 #ifdef PLATFORM_WINDOWS
-typedef __int64 jlong;
+  typedef __int64 jlong;
 #else
-typedef int64_t jlong;
+  #include <stdint.h>
+  typedef int64_t jlong;
 #endif
 typedef signed char jbyte;
 
